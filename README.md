@@ -12,7 +12,6 @@ So you will need to install some dependencies.
 
 #### For development
 
-- [Parcel JS](https://parceljs.org)
 - [Nodemon](https://nodemon.io)
 - [eslint](https://eslint.org)
 
@@ -26,12 +25,6 @@ So you will need to install some dependencies.
 Use npm or yarn to install all the needed modules.
 
 ```node
-yarn install
-```
-
-or
-
-```node
 npm install
 ```
 
@@ -39,30 +32,8 @@ npm install
 
 I add source and scripts in package.json files so you can use simple commande to start the project.
 
-### Start the front-end (With Parcel)
-
-This commande will start a development server to work on.
+This commande will start a development server for backend and frontend to work on.
 
 ```node
-yarn start
-```
-
-or
-
-```node
-npm start
-```
-
-### Start the back-end (With Nodemon)
-
-This commande will start the node server with nodemon restarting the server at each change.
-
-```node
-yarn serve
-```
-
-or
-
-```node
-npm run serve
+npm run dev
 ```
