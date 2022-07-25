@@ -9,7 +9,7 @@ const port = process.env.PORT || 8080;
 app.use(cors());
 app.use(express.json());
 
-app.use('/tasks', taskRoutes);
+app.use('/api/v1/tasks', taskRoutes);
 
 app.listen(port, () => {
     console.log(
