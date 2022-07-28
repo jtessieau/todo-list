@@ -14,6 +14,8 @@ exports.store = (req, res) => {
     const task = req.body;
     tasks.push(task);
 
+    console.log(tasks);
+
     res.send('task added to db');
 };
 
@@ -22,10 +24,13 @@ exports.destroy = (req, res) => {
 
     const taskToDelete = req.body;
 
-    for (let i = 0; i < tasks.length; i++) {
-        if (tasks[i].task == taskToDelete.task) {
-            tasks.splice(i, 1);
-            res.send('task deleted');
-        }
-    }
+    const indexOfTaskToDelete = tasks.findIndex(
+        (actualTask) => taskToDelete.name == actualTask.name
+    );
+
+    tasks.splice(indexOfTaskToDelete, 1);
+
+    console.log(tasks);
+
+    res.send('task deleted');
 };
