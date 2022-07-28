@@ -3,8 +3,7 @@ import { fetchTasks } from '../../services/tasks';
 import Task from './Task';
 
 function TaskList(props) {
-    let tasks = props.tasks;
-    let setTasks = props.setTasks;
+    const { tasks, setTasks } = props;
 
     useEffect(() => {
         fetchTasks().then((data) => {

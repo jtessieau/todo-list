@@ -1,8 +1,7 @@
 import { saveTask } from '../../services/tasks';
 
 function TaskForm(props) {
-    const tasks = props.tasks;
-    const setTasks = props.setTasks;
+    const { tasks, setTasks } = props;
 
     const handleSubmit = (e) => {
         e.preventDefault();
