@@ -16,7 +16,7 @@ exports.store = (req, res) => {
 
     console.log(tasks);
 
-    res.send('task added to db');
+    res.status(201).send('task added to db');
 };
 
 exports.destroy = (req, res) => {
