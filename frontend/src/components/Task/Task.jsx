@@ -9,7 +9,7 @@ function Task(props) {
     const handleClick = () => {
         deleteTask(task)
             .then(() => {
-                setTasks(tasks.filter((t) => t.name !== task.name));
+                setTasks(tasks.filter((t) => t.id !== task.id));
             })
             .catch((err) => {
                 alert(err);

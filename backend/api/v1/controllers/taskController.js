@@ -1,4 +1,5 @@
 const colors = require('colors');
+const { v4: uuidv4 } = require('uuid');
 
 const tasks = [];
 
@@ -12,11 +13,18 @@ exports.store = (req, res) => {
     console.log(colors.cyan('POST request received'));
 
     const task = req.body;
-    tasks.push(task);
+    const uuid = uuidv4();
+
+    const taskObject = {
+        id: uuid,
+        name: task.name,
+    };
+
+    tasks.push(taskObject);
 
     console.log(tasks);
 
-    res.status(201).send('task added to db');
+    res.status(201).json(taskObject);
 };
 
 exports.destroy = (req, res) => {
@@ -25,7 +33,7 @@ exports.destroy = (req, res) => {
     const taskToDelete = req.body;
 
     const indexOfTaskToDelete = tasks.findIndex(
-        (actualTask) => taskToDelete.name == actualTask.name
+        (actualTask) => taskToDelete.id == actualTask.id
     );
 
     tasks.splice(indexOfTaskToDelete, 1);

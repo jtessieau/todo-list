@@ -18,10 +18,8 @@ const saveTask = async (task) => {
         body: JSON.stringify(task),
     });
 
-    console.log(response);
-
     if (response.status === 201) {
-        return;
+        return response.json();
     } else {
         throw new Error(
             'A problem occured while trying to save your task. Please try again later.'
@@ -39,7 +37,7 @@ const deleteTask = async (task) => {
     });
 
     if (response.status === 200) {
-        return;
+        return response.json();
     } else {
         throw new Error(
             'A problem occured while trying to delete your task. Please try again later.'
