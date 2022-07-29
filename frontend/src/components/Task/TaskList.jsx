@@ -1,14 +1,18 @@
 import { useEffect } from 'react';
-import { fetchTasks } from '../../services/tasks';
+import { fetchTasks } from '../../services/taskService';
 import Task from './Task';
 
 function TaskList(props) {
     const { tasks, setTasks } = props;
 
     useEffect(() => {
-        fetchTasks().then((data) => {
-            setTasks(data);
-        });
+        fetchTasks()
+            .then((data) => {
+                setTasks(data);
+            })
+            .catch((err) => {
+                alert(err);
+            });
     }, [setTasks]);
 
     return (

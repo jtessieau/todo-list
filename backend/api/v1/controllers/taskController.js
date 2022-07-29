@@ -32,5 +32,5 @@ exports.destroy = (req, res) => {
 
     console.log(tasks);
 
-    res.send('task deleted');
+    res.status(200).send('task deleted');
 };

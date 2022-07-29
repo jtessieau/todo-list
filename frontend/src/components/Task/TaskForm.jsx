@@ -1,29 +1,26 @@
-import { saveTask } from '../../services/tasks';
+import { saveTask } from '../../services/taskService';
 
 function TaskForm(props) {
     const { tasks, setTasks } = props;
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        const taskName = document.getElementById('task-name');
+        const formInput = document.getElementById('task-name');
+        const taskName = formInput.value.trim().toLowerCase();
 
-        if (!taskName.value.trim()) return;
-
-        let taskNameString = taskName.value.trim();
-        taskNameString =
-            taskNameString[0].toUpperCase() + taskNameString.slice(1);
-
-        console.log(taskNameString);
+        if (!taskName) return;
 
         const task = {
-            name: taskNameString,
+            name: taskName,
         };
+
         saveTask(task)
-            .then(() => {
+            .then((response) => {
                 setTasks([...tasks, task]);
+                formInput.value = '';
             })
-            .then(() => {
-                taskName.value = '';
+            .catch((err) => {
+                alert(err);
             });
     };
 
