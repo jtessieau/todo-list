@@ -1,24 +1,24 @@
 # TODO LIST
 
-Simple todo list in js and node.
+Simple todo list with React and Node.
 
 ## Installation
 
-The front is write in HTML + Javascript. But I choose to use Parcel to split the project in multiple files and use SCSS.
-Parcel will handle the compilation of all the files into an usable web application.
-So you will need to install some dependencies.
-
 ### List of dependencies
 
-#### For development
+For the frontend, I use the react CLI to create a react-app.
+
+#### For backend as development
 
 - [Nodemon](https://nodemon.io)
 - [eslint](https://eslint.org)
+- [Concurrently](https://github.com/open-cli-tools/concurrently#readme)
 
-#### For application
+#### For backend
 
 - [Express](https://expressjs.com)
 - [Cors](https://expressjs.com/en/resources/middleware/cors.html)
+- [Colors](https://github.com/Marak/colors.js)
 
 ### Install the dependencies
 
@@ -26,6 +26,7 @@ Use npm or yarn to install all the needed modules.
 
 ```node
 npm install
+cd frontend && npm install
 ```
 
 ## Usage
