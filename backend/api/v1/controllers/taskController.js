@@ -1,15 +1,14 @@
 const colors = require('colors');
-const { v4: uuidv4 } = require('uuid');
+const Task = require('../models/TaskModel');
 
-const tasks = [];
-
-exports.show = (req, res) => {
+exports.show = async (req, res) => {
     console.log(colors.cyan('GET request received'));
+    const allTasks = await Task.find();
 
-    res.status(200).json(tasks);
+    res.status(200).json(allTasks);
 };
 
-exports.store = (req, res) => {
+exports.store = async (req, res) => {
     console.log(colors.green('POST request received'));
 
     const taskName = req.body.task.name.trim().toLowerCase();
@@ -18,50 +17,46 @@ exports.store = (req, res) => {
         res.status(500).send('Error, name can not be empty!');
     }
 
-    const newTask = {
-        id: uuidv4(),
-        name: taskName,
-    };
+    const newTask = new Task({ name: taskName });
 
-    tasks.push(newTask);
+    await newTask.save();
 
     res.status(201).json(newTask);
 };
 
-exports.update = (req, res) => {
+exports.update = async (req, res) => {
     console.log(colors.yellow('PUT task received'));
 
-    const updatedTask = req.body.task;
-    updatedTask.name = updatedTask.name.trim().toLowerCase();
+    const taskToUpdate = req.body.task;
+    taskToUpdate.name = taskToUpdate.name.trim().toLowerCase();
 
-    const taskToUpdateId = req.params.id;
-
-    if (!updatedTask.name) {
+    if (!taskToUpdate.name) {
         throw new Error('Error, name can not be empty!');
     }
 
-    if (taskToUpdateId !== updatedTask.id) {
+    const taskToUpdateId = req.params.id;
+
+    if (taskToUpdateId !== taskToUpdate.id) {
         throw new Error('A problem occurs.');
     }
 
-    const indexOfTaskToUpdate = tasks.findIndex(
-        (actualTask) => taskToUpdateId === actualTask.id
+    const updatedTask = await Task.findByIdAndUpdate(
+        taskToUpdateId,
+        {
+            name: taskToUpdate.name,
+        },
+        { new: true }
     );
 
-    tasks[indexOfTaskToUpdate].name = updatedTask.name;
-
-    res.status(200).json(tasks[indexOfTaskToUpdate]);
+    res.status(200).json(updatedTask);
 };
 
-exports.destroy = (req, res) => {
+exports.destroy = async (req, res) => {
     console.log(colors.red('DELETE task received'));
 
-    const taskToDelete = req.params.id;
-    const indexOfTaskToDelete = tasks.findIndex(
-        (actualTask) => taskToDelete === actualTask.id
-    );
+    const taskToDeleteId = req.params.id;
 
-    tasks.splice(indexOfTaskToDelete, 1);
+    await Task.findByIdAndDelete(taskToDeleteId);
 
     res.status(204).send();
 };

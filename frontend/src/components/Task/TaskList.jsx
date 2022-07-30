@@ -22,7 +22,7 @@ function TaskList(props) {
                 {tasks.map((task) => {
                     return (
                         <Task
-                            key={task.id}
+                            key={task._id}
                             task={task}
                             setTasks={setTasks}
                             tasks={tasks}

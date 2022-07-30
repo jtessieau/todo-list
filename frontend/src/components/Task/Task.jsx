@@ -10,14 +10,14 @@ function Task(props) {
         e.preventDefault();
         if (isEditing) {
             const editedTask = {
-                id: task.id,
+                id: task._id,
                 name: document.getElementById('edit-task-name-input').value,
             };
             editTask(editedTask)
                 .then((updatedTask) => {
                     setTasks(
                         tasks.map((t) =>
-                            t.id === updatedTask.id ? updatedTask : t
+                            t._id === updatedTask._id ? updatedTask : t
                         )
                     );
                     setIsEditing(false);
@@ -39,7 +39,7 @@ function Task(props) {
                     throw new Error('Task not deleted');
                 }
 
-                setTasks(tasks.filter((t) => t.id !== task.id));
+                setTasks(tasks.filter((t) => t._id !== task._id));
             })
             .catch((err) => {
                 alert(err);
@@ -56,7 +56,7 @@ function Task(props) {
     if (!isEditing) {
         return (
             <li>
-                <span style={{ width: '100px', display: 'inline-block' }}>
+                <span style={{ width: '150px', display: 'inline-block' }}>
                     {task.name}
                 </span>
                 <button onClick={handleEdit}>Edit</button>
@@ -70,7 +70,7 @@ function Task(props) {
                     <input
                         type="text"
                         id="edit-task-name-input"
-                        style={{ width: '100px', display: 'inline-block' }}
+                        style={{ width: '150px', display: 'inline-block' }}
                         defaultValue={task.name}
                     />
 

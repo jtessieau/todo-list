@@ -65,7 +65,7 @@ const editTask = async (editedTask) => {
 };
 
 const deleteTask = async (taskToDelete) => {
-    const response = await fetch('/api/v1/tasks/' + taskToDelete.id, {
+    const response = await fetch('/api/v1/tasks/' + taskToDelete._id, {
         method: 'DELETE',
     });
 
