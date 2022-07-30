@@ -72,12 +72,19 @@ function Task(props) {
                         id="edit-task-name-input"
                         style={{ width: '150px', display: 'inline-block' }}
                         defaultValue={task.name}
+                        onKeyDown={(e) => {
+                            if (e.key === 'Escape') {
+                                setIsEditing(false);
+                            }
+                        }}
                     />
 
                     <button type="submit" onClick={handleEdit}>
                         ok
                     </button>
-                    <button onClick={() => setIsEditing(false)}>cancel</button>
+                    <button type="button" onClick={() => setIsEditing(false)}>
+                        cancel
+                    </button>
                 </form>
             </li>
         );
