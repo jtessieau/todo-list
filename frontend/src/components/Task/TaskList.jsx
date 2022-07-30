@@ -19,10 +19,10 @@ function TaskList(props) {
         <div className="task-list">
             <h2>Task List</h2>
             <ul>
-                {tasks.map((task, index) => {
+                {tasks.map((task) => {
                     return (
                         <Task
-                            key={index}
+                            key={task.id}
                             task={task}
                             setTasks={setTasks}
                             tasks={tasks}

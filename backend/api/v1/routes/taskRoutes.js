@@ -7,6 +7,8 @@ router.get('/', taskController.show);
 
 router.post('/', taskController.store);
 
-router.delete('/', taskController.destroy);
+router.put('/:id', taskController.update);
+
+router.delete('/:id', taskController.destroy);
 
 module.exports = router;
