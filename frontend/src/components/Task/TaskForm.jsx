@@ -15,9 +15,8 @@ function TaskForm(props) {
         };
 
         saveTask(task)
-            .then((response) => {
-                const task = response;
-                setTasks([...tasks, task]);
+            .then((newTask) => {
+                setTasks([...tasks, newTask]);
                 formInput.value = '';
             })
             .catch((err) => {
