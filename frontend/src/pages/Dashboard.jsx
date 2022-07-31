@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import Navbar from '../components/shared/Navbar';
 import TaskForm from '../components/Task/TaskForm';
 import TaskList from '../components/Task/TaskList';
 
@@ -7,6 +8,7 @@ function Dashboard() {
 
     return (
         <>
+            <Navbar />
             <TaskForm tasks={tasks} setTasks={setTasks} />
             <TaskList tasks={tasks} setTasks={setTasks} />
         </>
