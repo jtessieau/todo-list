@@ -1,3 +1,4 @@
+import { authenticate } from '../services/authService';
 import Navbar from '../components/shared/Navbar';
 
 function Login() {
@@ -5,13 +6,18 @@ function Login() {
         e.preventDefault();
 
         const formData = new FormData(e.target);
-        
+
         const userData = {
             email: formData.get('email'),
             password: formData.get('password'),
         };
 
         console.log(userData);
+
+        authenticate(userData).then((token) => {
+            console.log(token);
+            localStorage.setItem('token', token);
+        });
     };
 
     return (
