@@ -4,10 +4,13 @@ const bcrypt = require('bcryptjs');
 
 exports.login = async (req, res) => {
     const user = await User.findOne({ email: req.body.email });
-    const isPasswordCorrect = await bcrypt.compare(
-        req.body.password,
-        user.password
-    );
+
+    if (user) {
+        var isPasswordCorrect = await bcrypt.compare(
+            req.body.password,
+            user.password
+        );
+    }
 
     if (!user || !isPasswordCorrect) {
         return res.status(404).send({ message: 'User not found' });
@@ -23,7 +26,10 @@ exports.login = async (req, res) => {
         expiresIn: '1h',
     });
 
-    res.json(token);
+    res.json({
+        message: 'ok',
+        token: token,
+    });
 };
 
 exports.store = async (req, res) => {

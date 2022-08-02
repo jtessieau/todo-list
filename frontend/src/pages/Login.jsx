@@ -1,7 +1,10 @@
 import { authenticate } from '../services/authService';
 import Navbar from '../components/shared/Navbar';
+import { Navigate } from 'react-router-dom';
+import { useState } from 'react';
 
 function Login() {
+    const [isLoggedIn, setIsLoggedIn] = useState(false);
     const handleSubmit = (e) => {
         e.preventDefault();
 
@@ -14,14 +17,19 @@ function Login() {
 
         console.log(userData);
 
-        authenticate(userData).then((token) => {
-            console.log(token);
-            localStorage.setItem('token', token);
+        authenticate(userData).then((response) => {
+            console.log(response);
+            if (response.token) {
+                localStorage.setItem('token', response.token);
+                setIsLoggedIn(true);
+            }
         });
     };
 
     return (
         <>
+            {isLoggedIn && <Navigate to={'/dashboard'} />}
+
             <Navbar />
             <h1>Login</h1>
             <form onSubmit={handleSubmit}>

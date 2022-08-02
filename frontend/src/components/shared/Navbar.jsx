@@ -1,19 +1,27 @@
-import { Link } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 import './Navbar.css';
 
 function Navbar() {
+    const isUserConnected = localStorage.getItem('token');
+
     return (
         <nav className="navbar">
             <ul>
-                <li>
-                    <Link to="/dashboard">Dashboard</Link>
-                </li>
-                <li>
-                    <Link to="/register">Register</Link>
-                </li>
-                <li>
-                    <Link to="/login">Login</Link>
-                </li>
+                {isUserConnected && (
+                    <li>
+                        <NavLink to="/dashboard">Dashboard</NavLink>
+                    </li>
+                )}
+                {!isUserConnected && (
+                    <>
+                        <li>
+                            <NavLink to="/register">Register</NavLink>
+                        </li>
+                        <li>
+                            <NavLink to="/login">Login</NavLink>
+                        </li>
+                    </>
+                )}
             </ul>
         </nav>
     );

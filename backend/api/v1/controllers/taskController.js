@@ -3,7 +3,8 @@ const Task = require('../models/TaskModel');
 
 exports.show = async (req, res) => {
     console.log(colors.cyan('GET request received'));
-    const allTasks = await Task.find();
+    console.log(req.user);
+    const allTasks = await Task.find({});
 
     res.status(200).json(allTasks);
 };

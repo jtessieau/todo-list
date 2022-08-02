@@ -1,8 +1,12 @@
 const fetchTasks = async () => {
     console.log('Getting all tasks ...');
+    const token = localStorage.getItem('token');
 
     const response = await fetch('/api/v1/tasks', {
         method: 'GET',
+        headers: {
+            authorization: 'Bearer ' + token,
+        },
     });
 
     if (response.status !== 200) {
