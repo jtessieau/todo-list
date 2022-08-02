@@ -9,6 +9,4 @@ router.post('/register', userController.store);
 // router.put('/:id', userController.update);
 // router.delete('/:id', userController.destroy);
 
-router.get('/verifyToken', userController.verifyToken);
-
 module.exports = router;
