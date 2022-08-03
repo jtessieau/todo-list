@@ -1,6 +1,9 @@
+/**
+ * Call the get route from api
+ * @returns
+ */
 const fetchTasks = async () => {
-    console.log('Getting all tasks ...');
-    const token = localStorage.getItem('token');
+    const token = getToken();
 
     const response = await fetch('/api/v1/tasks', {
         method: 'GET',
@@ -19,14 +22,18 @@ const fetchTasks = async () => {
 
     return allTasks;
 };
-
+/**
+ * Call the store route from the api
+ * @param {*} newTask
+ * @returns
+ */
 const saveTask = async (newTask) => {
-    console.log('Posting task to server ...');
-    console.log(newTask);
+    const token = getToken();
 
     const response = await fetch('/api/v1/tasks', {
         method: 'POST',
         headers: {
+            authorization: 'Bearer ' + token,
             'Content-Type': 'application/json',
         },
         body: JSON.stringify({
@@ -42,18 +49,22 @@ const saveTask = async (newTask) => {
 
     return createdTask;
 };
-
+/**
+ * Call the edit route from the api
+ * @param {*} editedTask
+ * @returns
+ */
 const editTask = async (editedTask) => {
+    const token = getToken();
+
     const response = await fetch('/api/v1/tasks/' + editedTask.id, {
         method: 'PUT',
         headers: {
             'Content-Type': 'application/json',
+            authorization: 'Bearer ' + token,
         },
         body: JSON.stringify({
-            task: {
-                id: editedTask.id,
-                name: editedTask.name,
-            },
+            editedTask,
         }),
     });
 
@@ -67,10 +78,19 @@ const editTask = async (editedTask) => {
 
     return updatedTask;
 };
-
+/**
+ * Call the delete route from api
+ * @param {*} taskToDelete
+ * @returns
+ */
 const deleteTask = async (taskToDelete) => {
+    const token = getToken();
+
     const response = await fetch('/api/v1/tasks/' + taskToDelete._id, {
         method: 'DELETE',
+        headers: {
+            authorization: 'Bearer ' + token,
+        },
     });
 
     if (response.status !== 204) {
@@ -80,6 +100,16 @@ const deleteTask = async (taskToDelete) => {
     }
 
     return true;
+};
+
+const getToken = () => {
+    const token = localStorage.getItem('token');
+
+    if (!token) {
+        throw new Error("Can't authenticate the user.");
+    }
+
+    return token;
 };
 
 export { fetchTasks, saveTask, editTask, deleteTask };
