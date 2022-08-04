@@ -14,4 +14,15 @@ const authenticate = async (userData) => {
 
 const register = async (newUserData) => {};
 
-export { authenticate, register };
+const getUserInformations = async (token) => {
+    const response = await fetch('api/v1/users', {
+        headers: {
+            method: 'GET',
+            authorization: 'Bearer ' + token,
+        },
+    });
+
+    return response;
+};
+
+export { authenticate, register, getUserInformations };
