@@ -1,3 +1,5 @@
+import handleError from './htmlStatusErrorService';
+
 const authenticate = async (userData) => {
     const response = await fetch('/api/v1/users/login', {
         method: 'POST',
@@ -6,6 +8,10 @@ const authenticate = async (userData) => {
         },
         body: JSON.stringify(userData),
     });
+
+    if (response.status !== 200) {
+        handleError(response);
+    }
 
     const data = await response.json();
 
@@ -21,6 +27,10 @@ const getUserInformations = async (token) => {
             authorization: 'Bearer ' + token,
         },
     });
+
+    if (response.status !== 200) {
+        handleError(response);
+    }
 
     return response;
 };

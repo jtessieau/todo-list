@@ -61,3 +61,8 @@ exports.store = async (req, res) => {
 
     res.json(newUser);
 };
+
+exports.logout = (req, res) => {
+    // TODO: invalidate token ?
+    res.send('logout');
+};

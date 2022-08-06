@@ -1,16 +1,33 @@
-import { NavLink } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
 import './Navbar.css';
 
 function Navbar() {
-    const isUserConnected = localStorage.getItem('token');
+    const isUserConnected = localStorage.getItem('user');
+    const navigate = useNavigate();
+
+    const logout = () => {
+        localStorage.removeItem('user');
+        navigate('/');
+    };
 
     return (
         <nav className="navbar">
             <ul>
                 {isUserConnected && (
-                    <li>
-                        <NavLink to="/dashboard">Dashboard</NavLink>
-                    </li>
+                    <>
+                        <li>
+                            <NavLink to="/dashboard">Dashboard</NavLink>
+                        </li>
+                        <li>
+                            <button
+                                onClick={() => {
+                                    logout();
+                                }}
+                            >
+                                Logout
+                            </button>
+                        </li>
+                    </>
                 )}
                 {!isUserConnected && (
                     <>

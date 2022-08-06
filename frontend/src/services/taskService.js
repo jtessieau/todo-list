@@ -1,3 +1,5 @@
+import handleError from './htmlStatusErrorService';
+
 /**
  * Call the get route from api
  * @returns
@@ -13,9 +15,7 @@ const fetchTasks = async () => {
     });
 
     if (response.status !== 200) {
-        throw new Error(
-            'A problem occured while trying to fetch your tasks. Please try again later'
-        );
+        await handleError(response);
     }
 
     const allTasks = await response.json();
@@ -42,7 +42,7 @@ const saveTask = async (newTask) => {
     });
 
     if (response.status !== 201) {
-        throw new Error(await response.text());
+        handleError(response);
     }
 
     const createdTask = await response.json();
@@ -67,11 +67,10 @@ const editTask = async (editedTask) => {
             editedTask,
         }),
     });
+    console.log(response);
 
     if (response.status !== 200) {
-        throw new Error(
-            'Oupss, something wrong happened... Please try again later.'
-        );
+        handleError(response.status);
     }
 
     const updatedTask = await response.json();
@@ -94,22 +93,19 @@ const deleteTask = async (taskToDelete) => {
     });
 
     if (response.status !== 204) {
-        throw new Error(
-            'A problem occured while trying to delete your task. Please try again later.'
-        );
+        handleError(response);
     }
 
     return true;
 };
 
 const getToken = () => {
-    const token = localStorage.getItem('token');
-
-    if (!token) {
-        throw new Error("Can't authenticate the user.");
+    if (localStorage.getItem('user')) {
+        const user = JSON.parse(localStorage.getItem('user'));
+        return user.token;
     }
 
-    return token;
+    throw new Error('User not logged in.');
 };
 
 export { fetchTasks, saveTask, editTask, deleteTask };

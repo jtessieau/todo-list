@@ -11,7 +11,7 @@ function TaskList(props) {
                 setTasks(data);
             })
             .catch((err) => {
-                alert(err);
+                console.error(err);
             });
     }, [setTasks]);
 

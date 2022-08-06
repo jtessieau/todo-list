@@ -2,9 +2,14 @@ import { authenticate } from '../services/authService';
 import Navbar from '../components/shared/Navbar';
 import { Navigate } from 'react-router-dom';
 import { useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { storeUser } from '../features/userSlice';
 
 function Login() {
     const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+    const dispatch = useDispatch();
+
     const handleSubmit = (e) => {
         e.preventDefault();
 
@@ -20,7 +25,8 @@ function Login() {
         authenticate(userData).then((response) => {
             console.log(response);
             if (response.token) {
-                localStorage.setItem('token', response.token);
+                localStorage.setItem('user', JSON.stringify(response));
+                dispatch(storeUser(response));
                 setIsLoggedIn(true);
             }
         });
