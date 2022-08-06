@@ -35,10 +35,8 @@ exports.login = async (req, res) => {
         expiresIn: '1h',
     });
 
-    res.json({
-        message: 'ok',
-        token: token,
-    });
+    payload.token = token;
+    res.json(payload);
 };
 
 exports.store = async (req, res) => {
