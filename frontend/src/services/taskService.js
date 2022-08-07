@@ -1,28 +1,39 @@
+import handleError from './htmlStatusErrorService';
+
+/**
+ * Call the get route from api
+ * @returns
+ */
 const fetchTasks = async () => {
-    console.log('Getting all tasks ...');
+    const token = getToken();
 
     const response = await fetch('/api/v1/tasks', {
         method: 'GET',
+        headers: {
+            authorization: 'Bearer ' + token,
+        },
     });
 
     if (response.status !== 200) {
-        throw new Error(
-            'A problem occured while trying to fetch your tasks. Please try again later'
-        );
+        await handleError(response);
     }
 
     const allTasks = await response.json();
 
     return allTasks;
 };
-
+/**
+ * Call the store route from the api
+ * @param {*} newTask
+ * @returns
+ */
 const saveTask = async (newTask) => {
-    console.log('Posting task to server ...');
-    console.log(newTask);
+    const token = getToken();
 
     const response = await fetch('/api/v1/tasks', {
         method: 'POST',
         headers: {
+            authorization: 'Bearer ' + token,
             'Content-Type': 'application/json',
         },
         body: JSON.stringify({
@@ -31,51 +42,70 @@ const saveTask = async (newTask) => {
     });
 
     if (response.status !== 201) {
-        throw new Error(await response.text());
+        handleError(response);
     }
 
     const createdTask = await response.json();
 
     return createdTask;
 };
-
+/**
+ * Call the edit route from the api
+ * @param {*} editedTask
+ * @returns
+ */
 const editTask = async (editedTask) => {
+    const token = getToken();
+
     const response = await fetch('/api/v1/tasks/' + editedTask.id, {
         method: 'PUT',
         headers: {
             'Content-Type': 'application/json',
+            authorization: 'Bearer ' + token,
         },
         body: JSON.stringify({
-            task: {
-                id: editedTask.id,
-                name: editedTask.name,
-            },
+            editedTask,
         }),
     });
+    console.log(response);
 
     if (response.status !== 200) {
-        throw new Error(
-            'Oupss, something wrong happened... Please try again later.'
-        );
+        handleError(response.status);
     }
 
     const updatedTask = await response.json();
 
     return updatedTask;
 };
-
+/**
+ * Call the delete route from api
+ * @param {*} taskToDelete
+ * @returns
+ */
 const deleteTask = async (taskToDelete) => {
+    const token = getToken();
+
     const response = await fetch('/api/v1/tasks/' + taskToDelete._id, {
         method: 'DELETE',
+        headers: {
+            authorization: 'Bearer ' + token,
+        },
     });
 
     if (response.status !== 204) {
-        throw new Error(
-            'A problem occured while trying to delete your task. Please try again later.'
-        );
+        handleError(response);
     }
 
     return true;
+};
+
+const getToken = () => {
+    if (localStorage.getItem('user')) {
+        const user = JSON.parse(localStorage.getItem('user'));
+        return user.token;
+    }
+
+    throw new Error('User not logged in.');
 };
 
 export { fetchTasks, saveTask, editTask, deleteTask };

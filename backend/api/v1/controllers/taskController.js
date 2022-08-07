@@ -3,7 +3,12 @@ const Task = require('../models/TaskModel');
 
 exports.show = async (req, res) => {
     console.log(colors.cyan('GET request received'));
-    const allTasks = await Task.find();
+    if (!req.user) {
+        return res.status(401).json({
+            message: 'Not authorized',
+        });
+    }
+    const allTasks = await Task.find({ userId: req.user._id });
 
     res.status(200).json(allTasks);
 };
@@ -17,7 +22,10 @@ exports.store = async (req, res) => {
         res.status(500).send('Error, name can not be empty!');
     }
 
-    const newTask = new Task({ name: taskName });
+    const newTask = new Task({
+        name: taskName,
+        userId: req.user._id,
+    });
 
     await newTask.save();
 
@@ -27,7 +35,7 @@ exports.store = async (req, res) => {
 exports.update = async (req, res) => {
     console.log(colors.yellow('PUT task received'));
 
-    const taskToUpdate = req.body.task;
+    const taskToUpdate = req.body.editedTask;
     taskToUpdate.name = taskToUpdate.name.trim().toLowerCase();
 
     if (!taskToUpdate.name) {
@@ -40,11 +48,9 @@ exports.update = async (req, res) => {
         throw new Error('A problem occurs.');
     }
 
-    const updatedTask = await Task.findByIdAndUpdate(
-        taskToUpdateId,
-        {
-            name: taskToUpdate.name,
-        },
+    const updatedTask = await Task.findOneAndUpdate(
+        { _id: taskToUpdateId, userId: req.user._id },
+        { name: taskToUpdate.name },
         { new: true }
     );
 
@@ -56,7 +62,7 @@ exports.destroy = async (req, res) => {
 
     const taskToDeleteId = req.params.id;
 
-    await Task.findByIdAndDelete(taskToDeleteId);
+    await Task.findOneAndDelete({ _id: taskToDeleteId, userId: req.user._id });
 
     res.status(204).send();
 };

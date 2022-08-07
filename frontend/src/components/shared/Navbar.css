@@ -1,0 +1,19 @@
+.navbar {
+    display: flex;
+}
+
+.navbar ul {
+    display: flex;
+}
+
+.navbar li {
+    margin: 0;
+    padding: 0;
+    list-style-type: none;
+}
+.navbar a {
+    background-color: bisque;
+    border: 1px solid black;
+    padding: 1rem 2rem;
+    list-style-type: none;
+}

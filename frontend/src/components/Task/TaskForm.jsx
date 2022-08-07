@@ -20,7 +20,7 @@ function TaskForm(props) {
                 formInput.value = '';
             })
             .catch((err) => {
-                alert(err);
+                console.error(err);
             });
     };
 
