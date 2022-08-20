@@ -37,18 +37,36 @@ function Login() {
             {isLoggedIn && <Navigate to={'/dashboard'} />}
 
             <Navbar />
-            <h1>Login</h1>
-            <form onSubmit={handleSubmit}>
-                <label>
-                    Email:
-                    <input type="email" name="email" />
-                </label>
-                <label>
-                    Password:
-                    <input type="password" name="password" />
-                </label>
-                <button type="submit">Login</button>
-            </form>
+
+            <div class="container">
+                <h1>Login</h1>
+
+                <form onSubmit={handleSubmit}>
+                    <div className="mb-3">
+                        <label htmlFor="email" class="form-label">
+                            Email:
+                        </label>
+                        <input
+                            className="form-control"
+                            type="email"
+                            name="email"
+                        />
+                    </div>
+                    <div className="mb-3">
+                        <label htmlFor="password" class="form-label">
+                            Password:
+                        </label>
+                        <input
+                            className="form-control"
+                            type="password"
+                            name="password"
+                        />
+                    </div>
+                    <button className="btn btn-primary" type="submit">
+                        Login
+                    </button>
+                </form>
+            </div>
         </>
     );
 }

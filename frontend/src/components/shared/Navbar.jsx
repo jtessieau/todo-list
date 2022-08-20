@@ -1,5 +1,4 @@
 import { NavLink, useNavigate } from 'react-router-dom';
-import './Navbar.css';
 
 function Navbar() {
     const isUserConnected = localStorage.getItem('user');
@@ -11,15 +10,19 @@ function Navbar() {
     };
 
     return (
-        <nav className="navbar">
-            <ul>
+        <nav className="navbar navbar-expand bg-light justify-content-between px-4">
+            <div className="nav-brand ">TODO</div>
+            <ul className="navbar-nav">
                 {isUserConnected && (
                     <>
-                        <li>
-                            <NavLink to="/dashboard">Dashboard</NavLink>
+                        <li className="nav-item">
+                            <NavLink className="nav-link" to="/dashboard">
+                                Dashboard
+                            </NavLink>
                         </li>
                         <li>
                             <button
+                                className="btn btn-primary"
                                 onClick={() => {
                                     logout();
                                 }}
@@ -31,11 +34,15 @@ function Navbar() {
                 )}
                 {!isUserConnected && (
                     <>
-                        <li>
-                            <NavLink to="/register">Register</NavLink>
+                        <li className="nav-item">
+                            <NavLink className="nav-link" to="/register">
+                                Register
+                            </NavLink>
                         </li>
-                        <li>
-                            <NavLink to="/login">Login</NavLink>
+                        <li className="nav-item">
+                            <NavLink className="nav-link" to="/login">
+                                Login
+                            </NavLink>
                         </li>
                     </>
                 )}

@@ -19,27 +19,59 @@ function Register() {
     return (
         <>
             <Navbar />
-            <h1>Register</h1>
-            <form onSubmit={handleSubmit}>
-                <label>
-                    Name:
-                    <input type="text" name="name" />
-                </label>
-                <label>
-                    Email:
-                    <input type="email" name="email" />
-                </label>
-                <label>
-                    Password:
-                    <input type="password" name="password" />
-                </label>
-                <label>
-                    Confirm password:
-                    <input type="password" name="passwordConfirmation" />
-                </label>
 
-                <button type="submit">Register</button>
-            </form>
+            <div class="container">
+                <h1>Register</h1>
+
+                <form onSubmit={handleSubmit}>
+                    <div className="mb-3">
+                        <label htmlFor="name" class="form-label">
+                            Name:
+                        </label>
+                        <input
+                            className="form-control"
+                            type="text"
+                            name="name"
+                        />
+                    </div>
+                    <div className="mb-3">
+                        <label htmlFor="email" class="form-label">
+                            Email:
+                        </label>
+                        <input
+                            className="form-control"
+                            type="email"
+                            name="email"
+                        />
+                    </div>
+                    <div className="mb-3">
+                        <label htmlFor="password" class="form-label">
+                            Password:
+                        </label>
+                        <input
+                            className="form-control"
+                            type="password"
+                            name="password"
+                        />
+                    </div>
+                    <div className="mb-3">
+                        <label
+                            htmlFor="passwordConfirmation"
+                            class="form-label"
+                        >
+                            Confirm password:
+                        </label>
+                        <input
+                            className="form-control"
+                            type="password"
+                            name="passwordConfirmation"
+                        />
+                    </div>
+                    <button className="btn btn-primary" type="submit">
+                        Register
+                    </button>
+                </form>
+            </div>
         </>
     );
 }

@@ -16,9 +16,9 @@ function TaskList(props) {
     }, [setTasks]);
 
     return (
-        <div className="task-list">
-            <h2>Task List</h2>
-            <ul>
+        <div className="container">
+            <h2 className="mb-4">Task List</h2>
+            <ul className="mx-0 px-0">
                 {tasks.map((task) => {
                     return (
                         <Task

@@ -4,7 +4,7 @@ import { createRoot } from 'react-dom/client';
 import { Provider } from 'react-redux';
 import store from './app/store';
 
-import './reset.css';
+import 'bootstrap/dist/css/bootstrap.css';
 import './index.css';
 
 import Home from './pages/Home';
