@@ -6,11 +6,13 @@ import ucfirst from '../../services/upperCaseFirst';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { faPenToSquare } from '@fortawesome/free-solid-svg-icons';
+import { useNavigate } from 'react-router-dom';
 
 library.add(faPenToSquare);
 
 function Task(props) {
     const { task, tasks, setTasks } = props;
+    const navigate = useNavigate();
 
     const [isEditing, setIsEditing] = useState(false);
 
@@ -29,8 +31,11 @@ function Task(props) {
                     );
                     setIsEditing(false);
                 })
-                .catch((error) => {
-                    alert(error);
+                .catch((err) => {
+                    console.error(err.message);
+                    if (err.message === 'User not logged in.') {
+                        navigate('/login');
+                    }
                 });
         } else {
             setIsEditing(true);
@@ -48,7 +53,10 @@ function Task(props) {
                     setTasks(tasks.filter((t) => t._id !== task._id));
                 })
                 .catch((err) => {
-                    alert(err);
+                    console.error(err.message);
+                    if (err.message === 'User not logged in.') {
+                        navigate('/login');
+                    }
                 });
         }
     };

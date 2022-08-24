@@ -1,7 +1,9 @@
+import { useNavigate } from 'react-router-dom';
 import { saveTask } from '../../services/taskService';
 
 function TaskForm(props) {
     const { tasks, setTasks } = props;
+    const navigate = useNavigate();
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -20,7 +22,10 @@ function TaskForm(props) {
                 formInput.value = '';
             })
             .catch((err) => {
-                console.error(err);
+                console.error(err.message);
+                if (err.message === 'User not logged in.') {
+                    navigate('/login');
+                }
             });
     };
 

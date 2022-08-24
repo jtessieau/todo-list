@@ -12,8 +12,6 @@ const handleError = async (response) => {
             console.log(401);
             localStorage.removeItem('user');
             throw new Error(payload);
-        case 500:
-            throw new Error('manon me pousse');
         default:
             throw new Error(payload ?? 'Server Error');
     }
